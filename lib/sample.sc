@@ -24,8 +24,15 @@ NrtSample {
   }
 
   play { |args|
-    var note = this.class.def.note(args.start, buffer.duration * args.rate);
-    this.applyArgs(note, args);
+    var note, rate, outbus;
+    rate = args.rate ? 1;
+    outbus = args.outbus ? 0;
+
+    note = this.class.def.note(args.start, buffer.duration * rate)
+      .buf_(buffer)
+      .outbus_(outbus)
+      .amp_(1);
+    // this.applyArgs(note, args);
     note.addTo(score);
     ^this;
   }
