@@ -1,11 +1,11 @@
 var measures = [
-  (
-    BickKick1: [1, 2, 3, 4],
-  )
+  IdentityDictionary[
+    \BigKick1 -> [1],
+  ]
 ];
 
-(
-  bpm: 96,
-  eigthNoteCount: 8,
-  measures: measures
-);
+IdentityDictionary[
+  \bpm -> 96,
+  \eighthNoteCount -> 8,
+  \measures -> measures
+];

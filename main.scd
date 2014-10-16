@@ -1,11 +1,14 @@
-var drumSampleDirs = "../frankendank/samples/drum/*".resolveRelative.pathMatch;
-var ctkScore = CtkScore.new;
-var samplesDictionary = IdentityDictionary[];
+var loadSamples = "./load_samples.scd".loadRelative[0];
 var scoreFile = "./score_file.scd".loadRelative[0];
 var parseScore = "./parse_score.scd".loadRelative[0];
-var loadSamples = "./load_samples.scd".loadRelative[0];
+var renderScore = "./render_score.scd".loadRelative[0];
+
+var ctkScore = CtkScore.new;
+var samplesDictionary = IdentityDictionary[];
+
+var drumSampleDirs = "../frankendank/samples/drum/*".resolveRelative.pathMatch;
 
 loadSamples.value(drumSampleDirs, samplesDictionary, ctkScore);
-parseScore.value(scoreFile, samplesDictionary);
+parseScore.value(scoreFile, samplesDictionary, ctkScore);
 
-renderScore.value(score, "render");
+renderScore.value(ctkScore, "drums");

@@ -1,4 +1,5 @@
-var bpmToBeatDur;
+var bpmToBeatDur, matchReservedKeys;
+var addNote = "./add_note.scd".loadRelative[0];
 
 bpmToBeatDur = { |bpm|
   60.0 / bpm;
@@ -9,21 +10,21 @@ matchReservedKeys = { |value, key|
   || (key == \eigthNoteCount)
 };
 
-{ |score, samples|
+{ |score, bufferDictionary, ctkScore|
   var elapsedTime = 1;
 
-  score.measures.do { |measure|
-    var eighthsInMeasure = measure.eightNoteCount ? score.eightNoteCount;
-    var beatDur = bpmToBeatDur.(measure.bpm ? score.bpm);
+  score[\measures].do { |measure|
+    var eighthsInMeasure = measure[\eighthNoteCount] ? score[\eighthNoteCount];
+    var beatDur = bpmToBeatDur.value(measure[\bpm] ? score[\bpm]);
 
-    measure.reject(matchReservedKeys).keysValuesDo { |sampleName, beatArray|
-      var sample = samples[sampleName];
+    measure.reject(matchReservedKeys).keysValuesDo { |bufferName, beatArray|
+      var buffer = bufferDictionary[bufferName];
 
       beatArray.do { |beat|
-        var args = ();
-        args.start = (beat - 1) + elapsedTime;
+        var args = IdentityDictionary[];
+        args[\start] = (beat - 1) + elapsedTime;
 
-        sample.play(args)
+        addNote.value(args, buffer, ctkScore);
       };
     };
 
