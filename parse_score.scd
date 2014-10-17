@@ -20,14 +20,16 @@ matchReservedKeys = { |value, key|
     measure.reject(matchReservedKeys).keysValuesDo { |bufferName, beatArray|
       var buffer = bufferDictionary[bufferName];
 
+      if (buffer.isNil) { Error("No buffer found for key: " ++ bufferName).throw };
+
       beatArray.do { |beat|
         var args = IdentityDictionary[];
-        args[\start] = (beat - 1) + elapsedTime;
+        args[\start] = (beatDur * (beat - 1)) + elapsedTime;
 
         addNote.value(args, buffer, ctkScore);
       };
     };
 
-    elapsedTime = elapsedTime + (eighthsInMeasure * (beatDur / 2));
+    elapsedTime = elapsedTime + ((eighthsInMeasure / 2) * beatDur);
   };
 };
