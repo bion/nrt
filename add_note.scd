@@ -39,7 +39,7 @@ applySpec = { |note, args|
     .rate_(rate)
     .buf_(buffer)
     .outbus_(outbus)
-    .amp_(1);
+    .amp_(0.25);
 
   note.addTo(score);
 };
