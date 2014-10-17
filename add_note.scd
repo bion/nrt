@@ -5,7 +5,7 @@ def = CtkNoteObject(
     |amp, rate, buf, outbus|
     var sig;
     sig = PlayBuf.ar(1, buf, BufRateScale.ir(buf) * rate);
-    Out.ar(outbus, sig * amp);
+    Out.ar(outbus, sig * amp ! 2);
   })
 );
 
