@@ -1,13 +1,13 @@
 var def, checkSpec, applySpec;
 
-def = CtkNoteObject(
-  SynthDef(\playBuffer, {
+def = SynthDef(\playBuffer, {
     |amp, rate, buf, outbus|
     var sig;
     sig = PlayBuf.ar(1, buf, BufRateScale.ir(buf) * rate);
     Out.ar(outbus, sig * amp ! 2);
-  })
-);
+  });
+
+def = CtkNoteObject(def);
 
 checkSpec = { |arguments|
   arguments.do { |anArgument|
