@@ -18,4 +18,4 @@ score = IdentityDictionary[
   \measures -> measures
 ];
 
-renderer.value(score, "drums_one");
+renderer.value(score, "../renders/drums_one");
