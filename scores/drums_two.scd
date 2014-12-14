@@ -1,4 +1,4 @@
-var renderer = "./nrt_sample_renderer.scd".loadRelative[0];
+var renderer = "../lib/nrt_sample_renderer.scd".loadRelative[0];
 var score, measures = [
   4.collect {
     IdentityDictionary[
