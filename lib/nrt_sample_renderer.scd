@@ -1,5 +1,5 @@
-var loadSamples = "./load_samples.scd".loadRelative[0];
-var parseScore = "./parse_score.scd".loadRelative[0];
+var loadSamples = "./samples/load_samples.scd".loadRelative[0];
+var parseScore = "./samples/parse_score.scd".loadRelative[0];
 var renderScore = "./render_score.scd".loadRelative[0];
 
 var ctkScore = CtkScore.new;

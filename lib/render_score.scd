@@ -7,7 +7,7 @@ serverOptions = ServerOptions()
   .maxNodes_(2**12);
 
 {|score, path|
-  path = path ++ ".aiff";
+  path = "../renders/" ++ path ++ ".aiff";
 
   if (path[0] != "/") {
     path = baseDir ++ path;
