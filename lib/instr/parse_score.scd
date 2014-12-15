@@ -6,6 +6,7 @@ var reservedKeyProcessors;
 var expandGesture;
 var protoProcessor, pitchProcessor;
 var resolveStartTime;
+var resolveDuration;
 
 bpmToBeatDur = { |bpm|
   60.0 / bpm;
@@ -15,7 +16,7 @@ protoProcessor = { |gesture|
   var proto = gesture[\proto];
   var withoutProto = gesture.reject({|k,v| v == \proto});
 
-  proto.keysValues {|key, value| withoutProto[key] = value};
+  proto.keysValuesDo {|key, value| withoutProto[key] = value};
   withoutProto;
 };
 
@@ -23,8 +24,8 @@ pitchProcessor = { |gesture|
   var pitchClass = gesture[\pitch];
   var withoutPitch = gesture.reject({|k,v| v == \pitch});
 
-  gesture[\freq] = pitchClass.freq;
-  gesture;
+  withoutPitch[\freq] = pitchClass.freq;
+  withoutPitch;
 };
 
 expandGesture = { |gesture|
@@ -39,10 +40,18 @@ expandGesture = { |gesture|
 
 resolveStartTime = { |gesture, elapsedTime, beatDur|
   var startBeat = gesture[\startBeat];
-  var withoutPitch = gesture.reject({|k,v| v == \startBeat});
+  var withoutStartBeat = gesture.reject({|k,v| v == \startBeat});
 
-  gesture[\start] = elapsedTime + (beatDur * (startBeat - 1));
-  gesture;
+  withoutStartBeat[\start] = elapsedTime + (beatDur * (startBeat - 1));
+  withoutStartBeat;
+};
+
+resolveDuration = { |gesture, beatDur|
+  var logicalDuration = gesture[\duration];
+  var withoutDuration = gesture.reject({|k,v| v == \duration});
+
+  withoutDuration[\duration] = logicalDuration * beatDur;
+  withoutDuration;
 };
 
 reservedKeyProcessors = IdentityDictionary[
@@ -51,7 +60,6 @@ reservedKeyProcessors = IdentityDictionary[
 ];
 
 { |score, ctkScore|
-
   var elapsedTime = 1;
 
   score[\measures].do {|measure|
@@ -59,9 +67,10 @@ reservedKeyProcessors = IdentityDictionary[
     var beatDur = bpmToBeatDur.value(measure[\bpm] ? score[\bpm]);
 
     measure[\gestures].do { |gesture|
-      var expandedGesture;
-      gesture = resolveStartTime.value(gesture, elapsedTime, beatDur);
-      expandedGesture = expandGesture.value(gesture);
+      var expandedGesture = expandGesture.value(gesture);
+
+      expandedGesture = resolveStartTime.value(expandedGesture, elapsedTime, beatDur);
+      expandedGesture = resolveDuration.value(expandedGesture, beatDur);
 
       addNote.value(expandedGesture, ctkScore);
     };

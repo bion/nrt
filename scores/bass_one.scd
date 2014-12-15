@@ -6,7 +6,9 @@ var openingMeasures;
 proto1 = IdentityDictionary[
   \synth -> \bass_s1,
   \outbus -> 0,
+  \amp -> 1,
   \cutOffFreq -> 1000,
+  \envCurve -> -3,
   \duration -> 1
 ];
 
@@ -35,8 +37,8 @@ openingMeasures
 ];
 
 score = IdentityDictionary[
-  \bpm -> 120,
-  \eighthNoteCount -> 8,
+  \bpm -> 210,
+  \eighthNoteCount -> 7,
   \measures -> measures
 ];
 

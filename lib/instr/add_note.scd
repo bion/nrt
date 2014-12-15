@@ -16,10 +16,10 @@ resolveDefFromGesture = { |gesture|
 
 createNote = { |gesture, def|
   var defArgs = def.args.keys;
-  var withoutStart = gesture.reject({|k,v| [\start].includes(v)});
   var note = def.note(gesture[\start], gesture[\duration]);
+  var argsOnlyGesture = gesture.reject({|k,v| [\start, \synth].includes(v)});
 
-  withoutStartDur.keysValuesDo { |key, value|
+  argsOnlyGesture.keysValuesDo { |key, value|
     var assignmentMethodName = (key ++ "_").asSymbol;
 
     if (defArgs.includes(key).not) {

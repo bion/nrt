@@ -4,6 +4,6 @@ var ctkScore = CtkScore.new;
 
 { |scoreFile, outputPath|
 
-  parseScore.value(scoreFile, samplesDictionary, ctkScore);
+  parseScore.value(scoreFile, ctkScore);
   renderScore.value(ctkScore, outputPath);
 };
