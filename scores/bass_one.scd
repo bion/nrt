@@ -6,10 +6,10 @@ var openingMeasures;
 proto1 = IdentityDictionary[
   \synth -> \bass_s1,
   \outbus -> 0,
-  \amp -> 1,
-  \cutOffFreq -> 1000,
-  \envCurve -> -3,
-  \duration -> 1
+  \amp -> 16,
+  \cutOffFreq -> 400,
+  \envCurve -> -2,
+  \duration -> 0.5
 ];
 
 openingMeasures = 4.collect {
@@ -17,14 +17,14 @@ openingMeasures = 4.collect {
     \gestures -> [
       IdentityDictionary[
         \proto -> proto1,
-        \startBeat -> 5,
+        \startBeat -> 2.5,
         \pitch -> PC(\a, 2)
       ],
 
       IdentityDictionary[
         \proto -> proto1,
-        \startBeat -> 6,
-        \pitch -> PC(\b, 2)
+        \startBeat -> 3,
+        \pitch -> PC(\e, 3)
       ]
     ]
   ]
@@ -37,7 +37,7 @@ openingMeasures
 ];
 
 score = IdentityDictionary[
-  \bpm -> 210,
+  \bpm -> 110,
   \eighthNoteCount -> 7,
   \measures -> measures
 ];
