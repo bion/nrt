@@ -3,7 +3,7 @@ var serverOptions;
 
 serverOptions = ServerOptions()
   .memSize_(2**18)
-  .numOutputBusChannels_(2)
+  .numOutputBusChannels_(1)
   .maxNodes_(2**12);
 
 {|score, path|
